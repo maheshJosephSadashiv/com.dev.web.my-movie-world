@@ -20,9 +20,6 @@ const App = () => {
         }
 
     }
-    // useEffect(() =>{
-    //     searchMovies('superman')
-    // }, []);
     return (
         <div className="app">
             <h1>Movie World</h1>
@@ -31,6 +28,10 @@ const App = () => {
                     placeholder="search for movies"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter'){
+                            searchMovies(searchTerm);
+                    }}}
                 />
                 <img src={SearchIcon} alt="search"
                     onClick={()=> searchMovies(searchTerm)}
@@ -38,21 +39,19 @@ const App = () => {
             </div>
             {
                 movies != null ?
-                movies.length > 0 ?
-                <div className="container">
-                {
-                    movies.map((movie) => (<MovieCard movieData={movie}/>))
-                }
-                </div> :
-                    <div className="empty">
-                        <h2>No Movies Found</h2>
-                    </div>
+                    movies.length > 0 ?
+                        <div className="container">
+                        {
+                            movies.map((movie) => (<MovieCard movieData={movie}/>))
+                        }
+                        </div> :
+                        <div className="empty">
+                            <h2>No Movies Found</h2>
+                        </div>
                 : <div className="empty">
 
                     </div>
             }
-
-
         </div>
     )
 }
